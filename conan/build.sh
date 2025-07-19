@@ -17,4 +17,4 @@ cmake --build .
 cd ..
 
 echo "Build completed!"
-echo "You can run the executable with: ./build//hello_conan"
+echo "You can run the executable with: ./build/hello_conan"
