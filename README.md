@@ -57,9 +57,15 @@
 
 1. **Локальная сборка**:
    ```bash
-   mkdir -p build && cd build
+   cd build
    cmake ..
-   make
+   cmake --build .
+   ```
+
+   или
+
+   ```bash
+   ../bash build.sh
    ```
 
 2. **Сборка с использованием Docker**:
