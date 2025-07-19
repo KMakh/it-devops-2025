@@ -1,0 +1,14 @@
+- name: Build SQLite
+  hosts: vagrant_vms
+  become: true
+
+  roles:
+    - sqlite3_build
+
+- name: Install Docker and build SQLite in docker container
+  hosts: vagrant_vms
+  become: true
+
+  roles:
+    - docker_install
+    - sqlite3_build_docker

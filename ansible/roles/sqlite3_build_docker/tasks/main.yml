@@ -1,0 +1,18 @@
+- name: Copy Docker build context to remote machine
+  copy:
+    src: "{{ role_path }}/files"
+    dest: "/tmp/sqlite_docker_build/"
+
+- name: Build Docker image
+  community.docker.docker_image:
+    name: sqlite_builder
+    tag: latest
+    source: build
+    build:
+      path: /tmp/sqlite_docker_build/
+
+- name: Run container
+  community.docker.docker_container:
+    name: sqlite_builder_container
+    image: sqlite_builder:latest
+    state: started

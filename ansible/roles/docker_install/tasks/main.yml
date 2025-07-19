@@ -1,0 +1,38 @@
+- name: Install dependencies
+  apt:
+    name:
+      [
+        apt-transport-https,
+        ca-certificates,
+        curl,
+        gnupg,
+        software-properties-common,
+      ]
+    state: present
+    update_cache: yes
+
+- name: Add Docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: Add Docker repository
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/debian  {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Install Docker packages
+  apt:
+    name: [docker-ce, docker-ce-cli, containerd.io]
+    state: present
+
+- name: Ensure docker group exists
+  ansible.builtin.group:
+    name: docker
+    state: present
+
+- name: Add env user to docker group
+  user:
+    name: "{{ ansible_env.USER }}"
+    groups: docker
+    append: yes

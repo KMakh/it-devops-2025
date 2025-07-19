@@ -1,0 +1,58 @@
+- name: Install required build tools
+  apt:
+    name: [build-essential, cmake, unzip, wget]
+    state: present
+    update_cache: yes
+
+- name: Create project directory
+  file:
+    path: "{{ ansible_env.HOME }}/sqlite"
+    state: directory
+
+- name: Download sqlite archive
+  get_url:
+    url: https://www.sqlite.org/2018/sqlite-amalgamation-3260000.zip
+    dest: /tmp/sqlite.zip
+
+- name: Unzip sqlite archive
+  unarchive:
+    remote_src: yes
+    src: /tmp/sqlite.zip
+    dest: "{{ ansible_env.HOME }}/sqlite"
+
+- name: Copy CMakeLists.txt
+  copy:
+    src: files/CMakeLists.txt
+    dest: "{{ ansible_env.HOME }}/sqlite/CMakeLists.txt"
+
+- name: Create build directory
+  file:
+    path: "{{ ansible_env.HOME }}/sqlite/build"
+    state: directory
+
+- name: Initialize CMake project
+  command: cmake ..
+  args:
+    chdir: "{{ ansible_env.HOME }}/sqlite/build"
+
+- name: Build SQLite library
+  shell: cmake --build . | tee build.log
+  args:
+    chdir: "{{ ansible_env.HOME }}/sqlite/build"
+
+- name: Create output directory
+  file:
+    path: "{{ ansible_env.HOME}}/sqlitelib"
+    state: directory
+
+- name: Copy .so to output directory
+  copy:
+    remote_src: yes
+    src: "{{  ansible_env.HOME  }}/sqlite/build/libsqlite3.so"
+    dest: "{{  ansible_env.HOME  }}/sqlitelib"
+
+- name: Copy build log to output directory
+  copy:
+    remote_src: yes
+    src: "{{  ansible_env.HOME  }}/sqlite/build/"
+    dest: "{{  ansible_env.HOME  }}/sqlitelib"
