@@ -1,0 +1,15 @@
+stages:
+  - build
+
+build_sqlite3:
+  stage: build
+  image: docker:latest
+  services:
+    - docker:dind
+  script:
+    - docker build -t sqlite3-builder .
+    - docker run --rm -v "$(pwd)/output:/sqlite3/output" sqlite3-builder
+  artifacts:
+    paths:
+      - output/
+    expire_in: 1 week
