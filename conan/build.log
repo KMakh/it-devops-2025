@@ -1,0 +1,21 @@
+Installing Conan dependencies...
+Configuring with CMake...
+-- Using Conan toolchain: /home/user/infotecs-devops-2025/conan/build/build/Release/generators/conan_toolchain.cmake
+-- Conan toolchain: Defining architecture flag: -m64
+-- Conan toolchain: C++ Standard 17 with extensions ON
+-- The CXX compiler identification is GNU 13.3.0
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Conan: Component target declared 'fmt::fmt'
+-- Configuring done (0.1s)
+-- Generating done (0.0s)
+-- Build files have been written to: /home/user/infotecs-devops-2025/conan/build
+Building...
+[ 50%] Building CXX object CMakeFiles/hello_conan.dir/src/main.cpp.o
+[100%] Linking CXX executable hello_conan
+[100%] Built target hello_conan
+Build completed!
+You can run the executable with: ./build//hello_conan
